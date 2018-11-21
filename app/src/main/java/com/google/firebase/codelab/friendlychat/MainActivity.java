@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity
             public void afterTextChanged(Editable editable) {
             }
         });
-
+        //메시지 받는부분
         mSendButton = (Button) findViewById(R.id.sendButton);
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
