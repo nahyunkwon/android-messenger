@@ -60,6 +60,8 @@ public class BadWordFilter {
             }
         }
 
+        System.out.println(badWordsFound.size());
+
         String inputToReturn = input;
         for (String swearWord : badWordsFound) {
             char[] charsStars = new char[swearWord.length()];
@@ -79,7 +81,7 @@ public class BadWordFilter {
             // The following spreadsheet is from: https://gist.github.com/PimDeWitte/c04cc17bc5fa9d7e3aee6670d4105941
             // (If the spreadsheet ever ceases to exist, then this application will still function normally otherwise - it just won't censor any swear words.)
 
-            FileReader fr = new FileReader("Word_Filter.csv");
+            FileReader fr = new FileReader("/Users/kwon/StudioProjects/android-messenger/app/src/main/java/com/google/firebase/codelab/friendlychat/Word_Filter.csv");
             BufferedReader reader = new BufferedReader(fr);
 
 //    	BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(
@@ -122,13 +124,14 @@ public class BadWordFilter {
                 }
             } // end while
         } catch (IOException except) {
-            //Log.d("exception", except.toString());
+            System.out.println(except.toString());
         }
     } // end loadBadWords
 
 
     public static void main(String[] args){
-        System.out.println(getCensoredText("안녕"));
+
+        System.out.println(getCensoredText("시발"));
     }
 
 }
