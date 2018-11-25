@@ -46,45 +46,153 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.appinvite.AppInvite;
-import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.google.firebase.appindexing.Action;
-import com.google.firebase.appindexing.FirebaseAppIndex;
-import com.google.firebase.appindexing.FirebaseUserActions;
-import com.google.firebase.appindexing.Indexable;
-import com.google.firebase.appindexing.builders.Indexables;
-import com.google.firebase.appindexing.builders.PersonBuilder;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.datatype.Duration;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity
         implements GoogleApiClient.OnConnectionFailedListener {
+
+    public static int largestWordLength = 0;
+
+    public static Map<String, String[]> allBadWords = new HashMap<String, String[]>();
+
+    /**
+     * Iterates over a String input and checks whether any cuss word was found - and for any/all cuss word found,
+     * as long as the cuss word should not be ignored (i.e. check for false positives - e.g. even though "bass"
+     * contains the word *ss, bass should not be censored) then (in the String returned) replace the cuss word with asterisks.
+     */
+    public String getCensoredText(String input) {
+        loadBadWords();
+        Log.d("in badword class",input);
+        if (input == null) {
+            return "";
+        }
+
+        String modifiedInput = input;
+
+        // remove leetspeak
+        modifiedInput = modifiedInput.replaceAll("1", "i").replaceAll("!", "i").replaceAll("3", "e").replaceAll("4", "a")
+                .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
+
+        // ignore any character that is not a letter
+        modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");
+
+        ArrayList<String> badWordsFound = new ArrayList<>();
+
+        // iterate over each letter in the word
+        for (int start = 0; start < modifiedInput.length(); start++) {
+            // from each letter, keep going to find bad words until either the end of
+            // the sentence is reached, or the max word length is reached.
+            for (int offset = 1; offset < (modifiedInput.length() + 1 - start) && offset < largestWordLength; offset++) {
+                String wordToCheck = modifiedInput.substring(start, start + offset);
+                if (allBadWords.containsKey(wordToCheck)) {
+                    String[] ignoreCheck = allBadWords.get(wordToCheck);
+                    boolean ignore = false;
+                    for (int stringIndex = 0; stringIndex < ignoreCheck.length; stringIndex++) {
+                        if (modifiedInput.contains(ignoreCheck[stringIndex])) {
+                            ignore = true;
+                            break;
+                        }
+                    }
+
+                    if (!ignore) {
+                        badWordsFound.add(wordToCheck);
+                    }
+                }
+            }
+        }
+
+        String inputToReturn = input;
+        for (String swearWord : badWordsFound) {
+            char[] charsStars = new char[swearWord.length()];
+            Arrays.fill(charsStars, '*');
+            final String stars = new String(charsStars);
+
+            // The "(?i)" is to make the replacement case insensitive.
+            inputToReturn = inputToReturn.replaceAll("(?i)" + swearWord, stars);
+        }
+        Log.d("return value", inputToReturn);
+        return inputToReturn;
+    } // end getCensoredText
+
+    public void loadBadWords() {
+        int readCounter = 0;
+        try {
+            // The following spreadsheet is from: https://gist.github.com/PimDeWitte/c04cc17bc5fa9d7e3aee6670d4105941
+            // (If the spreadsheet ever ceases to exist, then this application will still function normally otherwise - it just won't censor any swear words.)
+
+            //FileReader fr = new FileReader("Word_Filter.csv");
+
+            InputStreamReader is = new InputStreamReader(getAssets()
+                    .open("Word_Filter.csv"));
+
+            BufferedReader reader = new BufferedReader(is);
+
+//    	BufferedReader reader = new BufferedReader(new InputStreamReader(new URL(
+//          "https://docs.google.com/spreadsheets/d/1hIEi2YG3ydav1E06Bzf2mQbGZ12kh2fe4ISgLg_UBuM/export?format=csv")
+//          .openConnection().getInputStream()));
+
+
+            String currentLine = "";
+            while ((currentLine = reader.readLine()) != null) {
+                readCounter++;
+                String[] content = null;
+                try {
+                    if (1 == readCounter) {
+                        continue;
+                    }
+
+                    content = currentLine.split(",");
+                    if (content.length == 0) {
+                        continue;
+                    }
+
+                    final String word = content[0];
+
+                    if (word.startsWith("-----")) {
+                        continue;
+                    }
+
+                    if (word.length() > largestWordLength) {
+                        largestWordLength = word.length();
+                    }
+
+                    String[] ignore_in_combination_with_words = new String[] {};
+                    if (content.length > 1) {
+                        ignore_in_combination_with_words = content[1].split("_");
+                    }
+
+                    // Make sure there are no capital letters in the spreadsheet
+                    allBadWords.put(word.replaceAll(" ", "").toLowerCase(), ignore_in_combination_with_words);
+                } catch (Exception except) {
+                }
+            } // end while
+        } catch (IOException except) {
+            Log.d("exception", except.toString());
+        }
+    } // end loadBadWords
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView messageTextView;
@@ -107,7 +215,7 @@ public class MainActivity extends AppCompatActivity
     private static final int REQUEST_INVITE = 1;
     private static final int REQUEST_IMAGE = 2;
     private static final String LOADING_IMAGE_URL = "https://www.google.com/images/spin-32.gif";
-    public static final int DEFAULT_MSG_LENGTH_LIMIT = 10;
+    public static final int DEFAULT_MSG_LENGTH_LIMIT = 100;
     public static final String ANONYMOUS = "anonymous";
     private static final String MESSAGE_SENT_EVENT = "message_sent";
     private String mUsername;
@@ -285,13 +393,15 @@ public class MainActivity extends AppCompatActivity
             public void afterTextChanged(Editable editable) {
             }
         });
-
+        //메시지 받는부분
         mSendButton = (Button) findViewById(R.id.sendButton);
         mSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String filteredText = getCensoredText(mMessageEditText.getText().toString());
+                Log.d("test", filteredText);
                 FriendlyMessage friendlyMessage = new
-                        FriendlyMessage(mMessageEditText.getText().toString(),
+                        FriendlyMessage(filteredText,
                         mUsername,
                         mPhotoUrl,
                         null /* no image */);
