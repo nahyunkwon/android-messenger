@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
 
         // ignore any character that is not a letter
-        modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");
+        //modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");
 
         ArrayList<String> badWordsFound = new ArrayList<>();
 
@@ -122,6 +122,11 @@ public class MainActivity extends AppCompatActivity
                     }
                 }
             }
+        }
+
+        //욕설이 나오면 타임스탬프 찍는 부분
+        if(badWordsFound.size()>0){
+
         }
 
         String inputToReturn = input;
