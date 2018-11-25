@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
 
         // ignore any character that is not a letter
-        //modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");
+        modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");
 
         ArrayList<String> badWordsFound = new ArrayList<>();
 
@@ -187,7 +187,6 @@ public class MainActivity extends AppCompatActivity
                     // Make sure there are no capital letters in the spreadsheet
                     allBadWords.put(word.replaceAll(" ", "").toLowerCase(), ignore_in_combination_with_words);
                 } catch (Exception except) {
-                    Log.d("exception", except.toString());
                 }
             } // end while
         } catch (IOException except) {
