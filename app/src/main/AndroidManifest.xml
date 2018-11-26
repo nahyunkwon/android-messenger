@@ -18,7 +18,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignInActivity" />
-        <activity android:name=".ChatRoomActivity"></activity>
+        <activity android:name=".ChatRoomActivity" />
+        <activity android:name=".SlangGraph">
+        </activity>
     </application>
 
 </manifest>
