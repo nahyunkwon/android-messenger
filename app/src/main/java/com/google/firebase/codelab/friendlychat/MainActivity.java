@@ -68,6 +68,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.sql.Timestamp;
+import java.util.StringTokenizer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -77,6 +79,12 @@ public class MainActivity extends AppCompatActivity
     public static int largestWordLength = 0;
 
     public static Map<String, String[]> allBadWords = new HashMap<String, String[]>();
+
+    public static int num = 0;
+
+    public static HashMap<Integer, ArrayList<Timestamp>> week = new HashMap<Integer, ArrayList<Timestamp>>();
+
+    public static ArrayList<Timestamp> time = new ArrayList<Timestamp>();
 
     /**
      * Iterates over a String input and checks whether any cuss word was found - and for any/all cuss word found,
@@ -97,7 +105,7 @@ public class MainActivity extends AppCompatActivity
                 .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
 
         // ignore any character that is not a letter
-        modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");
+        //modifiedInput = modifiedInput.toLowerCase().replaceAll("[^a-zA-Z]", "");
 
         ArrayList<String> badWordsFound = new ArrayList<>();
 
@@ -124,6 +132,34 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+        //욕설이 나오면 타임스탬프 찍는 부분
+        if(badWordsFound.size()>0){
+            time.add(new Timestamp(System.currentTimeMillis()));
+
+            String s;
+            s = time.get(num).toString();
+            StringTokenizer str = new StringTokenizer(s, " ");
+            s = str.nextToken();
+            str = new StringTokenizer(s, "-");
+            for (int j = 0; j <3; j++)
+                s =str.nextToken();
+
+            int date = Integer.parseInt(s);
+
+            if(!week.containsKey(date)) {
+                ArrayList<Timestamp> tmpList = new ArrayList<Timestamp>();
+                tmpList.add(time.get(num));
+                week.put(date, tmpList);
+            }
+            else {
+                ArrayList<Timestamp> tmpListRef = week.get(date);
+                tmpListRef.add(time.get(num));
+                week.put(date, tmpListRef);
+            }
+
+            num++;
+        }
+
         String inputToReturn = input;
         for (String swearWord : badWordsFound) {
             char[] charsStars = new char[swearWord.length()];
@@ -136,6 +172,15 @@ public class MainActivity extends AppCompatActivity
         Log.d("return value", inputToReturn);
         return inputToReturn;
     } // end getCensoredText
+
+    public void callGraph(View view) {
+
+        Intent GraphIntent = new Intent (this, SlangGraph.class);
+
+        startActivity(GraphIntent);
+
+    }
+
 
     public void loadBadWords() {
         int readCounter = 0;
