@@ -10,9 +10,9 @@
 
 
 
-# Profanity Filtering(비속어 필터링)
+# 1. Profanity Filtering(비속어 필터링)
 
-## 사용자 메시지 받기
+## 1.1. 사용자 메시지 받기
 
 
 ```java
@@ -41,7 +41,7 @@ mSendButton = (Button) findViewById(R.id.sendButton);
 filteredText는 FriendlyMessage 형태로 파이어베이스 데이터베이스로 전송된다.
          
          
-## 비속어 필터링 메소드 호출
+## 1.2. 비속어 필터링 메소드 호출
 
 ```java
 String filteredText = getCensoredText(mMessageEditText.getText().toString());
@@ -50,7 +50,7 @@ String filteredText = getCensoredText(mMessageEditText.getText().toString());
 사용자의 메시지는 getCensoredText() 메소드를 통해 비속어 탐지 후 비속어가 있으면 필터링된다.
 
 
-## 비속어 데이터베이스 load
+## 1.3. 비속어 데이터베이스 load
 
 ```java
 loadBadWords()
@@ -68,44 +68,44 @@ loanBadWords() 메소드는 assets 폴더의 비속어 데이터를 불러온다
 
 ```java
 // Make sure there are no capital letters in the spreadsheet
-                     allBadWords.put(word.replaceAll(" ", "").toLowerCase(), ignore_in_combination_with_words);
+allBadWords.put(word.replaceAll(" ", "").toLowerCase(), ignore_in_combination_with_words);
 ```
                      
 모든 비속어는 allBadWords 해시맵에 저장된다.              
 
 
-## 비속어 필터링
+## 1.4. 비속어 필터링
 
 ```java
 // remove leetspeak
-         modifiedInput = modifiedInput.replaceAll("1", "i").replaceAll("!", "i").replaceAll("3", "e").replaceAll("4", "a")
-                 .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
+modifiedInput = modifiedInput.replaceAll("1", "i").replaceAll("!", "i").replaceAll("3", "e").replaceAll("4", "a")
+    .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
 ```
 
 getCensoredText()에서는 먼저 input에서 leetspeak을 제거한다.(영어 비속어의 경우)
 
 ```java
 // iterate over each letter in the word
-         for (int start = 0; start < modifiedInput.length(); start++) {
-             // from each letter, keep going to find bad words until either the end of
-             // the sentence is reached, or the max word length is reached.
-             for (int offset = 1; offset < (modifiedInput.length() + 1 - start) && offset < largestWordLength; offset++) {
-                 String wordToCheck = modifiedInput.substring(start, start + offset);
-                 if (allBadWords.containsKey(wordToCheck)) {
-                     String[] ignoreCheck = allBadWords.get(wordToCheck);
-                     boolean ignore = false;
-                     for (int stringIndex = 0; stringIndex < ignoreCheck.length; stringIndex++) {
-                         if (modifiedInput.contains(ignoreCheck[stringIndex])) {
-                             ignore = true;
-                             break;
-                         }
-                     }
-                     if (!ignore) {
-                         badWordsFound.add(wordToCheck);
-                     }
-                 }
-             }
-         }
+for (int start = 0; start < modifiedInput.length(); start++) {
+    // from each letter, keep going to find bad words until either the end of
+    // the sentence is reached, or the max word length is reached.
+    for (int offset = 1; offset < (modifiedInput.length() + 1 - start) && offset < largestWordLength; offset++) {
+        String wordToCheck = modifiedInput.substring(start, start + offset);
+        if (allBadWords.containsKey(wordToCheck)) {
+        String[] ignoreCheck = allBadWords.get(wordToCheck);
+        boolean ignore = false;
+        for (int stringIndex = 0; stringIndex < ignoreCheck.length; stringIndex++) {
+            if (modifiedInput.contains(ignoreCheck[stringIndex])) {
+                ignore = true;
+                break;
+            }
+        }
+        if (!ignore) {
+            badWordsFound.add(wordToCheck);
+        }
+        }
+    }
+}
 ```
          
 이후 input String의 단어를 반복하며 allBadWords의 비속어를 갖고 있는지 검사하여 비속어를 찾는다.
@@ -129,21 +129,21 @@ input String에 비속어가 있으면 해당 비속어의 단어 하나하나�
 
 
 
-# Profanity Usage Statistics(비속어 사용 통계)
+# 2. Profanity Usage Statistics(비속어 사용 통계)
 
 
 
 
 
 
-# User Interface(사용자 인터페이스)
+# 3. User Interface(사용자 인터페이스)
 
 
 
 
 
 
-## 사용 오픈소스
+## 4. 사용 오픈소스
 
 * Firebase 안드로이드 메신저 오픈소스
 https://github.com/KwonNH/android-messenger
@@ -155,7 +155,7 @@ https://github.com/souwoxi/Profanity
 https://github.com/jjoe64/GraphView
 
 
-## 팀원별 역할
+## 5. 팀원별 역할
 
 * 1515004 권나현: 비속어 필터링 기능 개발
 
