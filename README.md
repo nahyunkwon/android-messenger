@@ -12,9 +12,11 @@
 
 # Profanity Filtering(비속어 필터링)
 
-* 사용자 메시지 받기
+## 사용자 메시지 받기
 
-> mSendButton = (Button) findViewById(R.id.sendButton);
+
+```java
+mSendButton = (Button) findViewById(R.id.sendButton);
          mSendButton.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
@@ -29,6 +31,9 @@
                  mMessageEditText.setText("");
              }
          });
+         </code></pre>
+```
+
          
 비속어 필터링은 MainActivity의 사용자에게 메시지를 받는 부분에서 이루어진다.
 사용자가 send 버튼을 누르면 mSendButton의 OnClick() 메소드가 실행되고, mMessageEditText를 통해 받아온
@@ -36,41 +41,51 @@
 filteredText는 FriendlyMessage 형태로 파이어베이스 데이터베이스로 전송된다.
          
          
-* 비속어 필터링 메소드 호출
+## 비속어 필터링 메소드 호출
 
->String filteredText = getCensoredText(mMessageEditText.getText().toString());
+```java
+String filteredText = getCensoredText(mMessageEditText.getText().toString());
+```
 
 사용자의 메시지는 getCensoredText() 메소드를 통해 비속어 탐지 후 비속어가 있으면 필터링된다.
 
 
-* 비속어 데이터베이스 load
+## 비속어 데이터베이스 load
 
->loadBadWords()
+```java
+loadBadWords()
+```
 
 getCensoredText()는 loanBadWords() 메소드를 호출한다. 이 메소드는 사용자 메시지에서 비속어를 필터링하기 쉽도록 비속어 데이터를 정리하는 역할을 한다.
 
-
->InputStreamReader is = new InputStreamReader(getAssets()
+```java
+InputStreamReader is = new InputStreamReader(getAssets()
                      .open("Word_Filter.csv")); //get bad word database from assets folder
+```
 
 loanBadWords() 메소드는 assets 폴더의 비속어 데이터를 불러온다.
 비속어 데이터는 csv 파일 형식으로 저장한다.
 
->// Make sure there are no capital letters in the spreadsheet
+```java
+// Make sure there are no capital letters in the spreadsheet
                      allBadWords.put(word.replaceAll(" ", "").toLowerCase(), ignore_in_combination_with_words);
+```
                      
 모든 비속어는 allBadWords 해시맵에 저장된다.              
 
 
-* 비속어 필터링
+## 비속어 필터링
 
->// remove leetspeak
+```java
+// remove leetspeak
          modifiedInput = modifiedInput.replaceAll("1", "i").replaceAll("!", "i").replaceAll("3", "e").replaceAll("4", "a")
                  .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
+```
 
 getCensoredText()에서는 먼저 input에서 leetspeak을 제거한다.(영어 비속어의 경우)
 
->// iterate over each letter in the word
+```java
+// iterate over each letter in the word
          for (int start = 0; start < modifiedInput.length(); start++) {
              // from each letter, keep going to find bad words until either the end of
              // the sentence is reached, or the max word length is reached.
@@ -91,12 +106,14 @@ getCensoredText()에서는 먼저 input에서 leetspeak을 제거한다.(영어 
                  }
              }
          }
+```
          
 이후 input String의 단어를 반복하며 allBadWords의 비속어를 갖고 있는지 검사하여 비속어를 찾는다.
 여기서 largestWordLength는 loanBadWords()에서 계산된, 비속어 데이터를 정리할 때 가장 긴 비속어의 길이를 의미한다.
          
          
->// replace each bad word character with *
+```java
+// replace each bad word character with *
          String inputToReturn = input;
          for (String swearWord : badWordsFound) {
              char[] charsStars = new char[swearWord.length()];
@@ -105,6 +122,7 @@ getCensoredText()에서는 먼저 input에서 leetspeak을 제거한다.(영어 
              // The "(?i)" is to make the replacement case insensitive.
              inputToReturn = inputToReturn.replaceAll("(?i)" + swearWord, stars);
          }
+ ```
          
 input String에 비속어가 있으면 해당 비속어의 단어 하나하나는 *로 대체되며, 이 결과를 리턴한다.
          
