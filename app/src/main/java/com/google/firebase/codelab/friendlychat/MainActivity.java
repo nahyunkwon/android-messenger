@@ -86,14 +86,17 @@ public class MainActivity extends AppCompatActivity
 
     public static ArrayList<Timestamp> time = new ArrayList<Timestamp>();
 
+    /* Profanity Filtering */
+
     /**
      * Iterates over a String input and checks whether any cuss word was found - and for any/all cuss word found,
      * as long as the cuss word should not be ignored (i.e. check for false positives - e.g. even though "bass"
      * contains the word *ss, bass should not be censored) then (in the String returned) replace the cuss word with asterisks.
      */
     public String getCensoredText(String input) {
+
         loadBadWords();
-        Log.d("in badword class",input);
+
         if (input == null) {
             return "";
         }
@@ -124,7 +127,6 @@ public class MainActivity extends AppCompatActivity
                             break;
                         }
                     }
-
                     if (!ignore) {
                         badWordsFound.add(wordToCheck);
                     }
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity
             num++;
         }
 
+        // replace each bad word character with *
         String inputToReturn = input;
         for (String swearWord : badWordsFound) {
             char[] charsStars = new char[swearWord.length()];
@@ -181,7 +184,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
+    // load and clean bad word database
     public void loadBadWords() {
         int readCounter = 0;
         try {
@@ -191,7 +194,7 @@ public class MainActivity extends AppCompatActivity
             //FileReader fr = new FileReader("Word_Filter.csv");
 
             InputStreamReader is = new InputStreamReader(getAssets()
-                    .open("Word_Filter.csv"));
+                    .open("Word_Filter.csv")); //get bad word database from assets folder
 
             BufferedReader reader = new BufferedReader(is);
 
@@ -444,7 +447,6 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 String filteredText = getCensoredText(mMessageEditText.getText().toString());
-                Log.d("test", filteredText);
                 FriendlyMessage friendlyMessage = new
                         FriendlyMessage(filteredText,
                         mUsername,
