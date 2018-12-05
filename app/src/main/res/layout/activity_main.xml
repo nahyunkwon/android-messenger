@@ -15,7 +15,8 @@
         android:id="@+id/messageRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"/>
+        android:layout_above="@+id/linearLayout"
+        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -61,11 +62,12 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="37dp"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
+        android:layout_alignParentTop="true"
         android:layout_marginEnd="9dp"
-        android:background="@color/graphButton"
+        android:layout_marginTop="15dp"
+        android:background="#FF9333 "
+        android:fontFamily="@font/nanumsquare_eb"
         android:onClick="callGraph"
         android:text="Graph" />
 </RelativeLayout>
