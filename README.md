@@ -199,6 +199,110 @@ else {
 get()메소드를 이용하여 time에서 시각원소를 받아 add() 메소드를 이용하여 tmpListRef에 저장하고, put()메소드의 매개변수로 date를 키로 tmpListRef을 value를 저장한다.
 
 
+## 2.4. 비속어 사용 통계 액티비티 생성
+
+```java
+public void callGraph(View view) {
+        Intent GraphIntent = new Intent (this, SlangGraph.class);
+        startActivity(GraphIntent);
+    }
+ ```
+
+MainActivity의 callGraph() 메소드는 activity_main의 GRAPH 버튼과 연결되어 해당 버튼을 눌렀을 때 SlangGraph가 시작되도록 한다.
+
+
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_slang_graph);
+    showGraph();
+}
+ ```
+SlangGraph가 호출되면 onCreate() 메소드 내에서 비속어 사용 통계량을 보여주는 showGraph() 메소드를 호출한다.
+
+
+## 2.5. 비속어 통계 그래프 데이터 받기
+
+```java
+Timestamp today = new Timestamp(System.currentTimeMillis());
+String key = today.toString();
+StringTokenizer str = new StringTokenizer(key, " ");
+key = str.nextToken();
+str = new StringTokenizer(key, "-");
+for(int i =0; i<3; i++){
+    key = str.nextToken();
+}
+int k_value = Integer.parseInt(key);
+ ```
+
+showGraph() 메소드는 우선 Timestamp 객체를 생성해 메소드가 호출당한 시간을 알아낸다.
+그 후 today의 값을 스트링으로 받아 StringTokenizer를 이용해 해당 시간의 날짜 부분을 key 변수에 대입한다.
+그리고 key 변수의 String 값을 Integer로 변환한다.
+
+
+```java
+int[] array_x = new int[7];
+for(int i=0; i<7; i++){
+    array_x[i] = k_value-i;
+}
+int[] array_y = new int[7];
+for(int i=0; i<7; i++){
+    if(!MainActivity.week.containsKey(array_x[i])){
+        array_y[i] = 0;
+        break;
+    }
+    array_y[i] = MainActivity.week.get(array_x[i]).size();
+}
+ ```
+
+그래프에서 최근 7일의 비속어 사용량을 보여주기 위해 k_value를 기준으로 그래프 x축에 사용될 값들을 배열 array_x에 대입한다.
+그리고 MainActivity에서 생성된 HashMap에서 array_x의 값들을 key로 가지는 ArrayList value들의 사이즈를 배열 array_y에 순서대로 대입한다.
+
+
+## 2.6. 비속어 사용 통계 그래프 생성
+
+```java
+implementation 'com.jjoe64:graphview:4.2.2'
+ ```
+
+비속어 사용 통계 그래프를 생성하기 위해 오픈 소스인 Android Graph Library GraphView를 사용한다.
+
+
+ ```java
+ graph_view = (com.jjoe64.graphview.GraphView) findViewById(R.id.graph);
+ LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
+         new DataPoint(array_x[6], array_y[6]),
+         new DataPoint(array_x[5], array_y[5]),
+         new DataPoint(array_x[4], array_y[4]),
+         new DataPoint(array_x[3], array_y[3]),
+         new DataPoint(array_x[2], array_y[2]),
+         new DataPoint(array_x[1], array_y[1]),
+         new DataPoint(array_x[0], array_y[0])
+ });
+ graph_view.addSeries(series);
+  ```
+
+GraphView 라이브러리를 사용해 선 그래프를 생성하고 이전에 만들어둔 배열 array_x와 array_y를 그래프의 DataPoint로 넣어준다.
+
+ ```java
+<com.jjoe64.graphview.GraphView
+    android:id="@+id/graph"
+    android:layout_width="315dp"
+    android:layout_height="168dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.849"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.498" />
+  ```
+
+그래프를 액티비티에서 볼 수 있도록 activity_slang_graph.xml에도 그래프 요소를 추가한다.
 
 
 
@@ -313,12 +417,12 @@ values > colors.xml 내의 컬러 변수들을 변경하여 사용한다.
 
 ```java
 android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="삐비톡"
-        android:supportsRtl="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme">
-        // label is icon application name and roudIcon is application icon image
+android:icon="@mipmap/ic_launcher"
+android:label="삐비톡"
+android:supportsRtl="true"
+android:roundIcon="@mipmap/ic_launcher_round"
+android:theme="@style/AppTheme">
+// label is icon application name and roudIcon is application icon image
 ```
 
 AndroidManifest.xml 내 변수들을 변경하여 이 기능들을 수행한다.
