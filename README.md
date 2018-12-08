@@ -156,14 +156,14 @@ time 은 ArrayList로 사용자가 채팅방에 비속어가 적힌 메세지를
 ## 2.2. 날짜 얻는 부분
 ```java
 String s;  
-    s = time.get(num).toString();  
+s = time.get(num).toString();  
 
 StringTokenizer str = new StringTokenizer(s, " "); 
-    s = str.nextToken(); 
+s = str.nextToken(); 
 
-    str = new StringTokenizer(s, "-"); 
-    for (int j = 0; j <3; j++) 
-        s =str.nextToken();  
+str = new StringTokenizer(s, "-"); 
+for (int j = 0; j <3; j++) 
+    s =str.nextToken();  
 
 ```
 사용자가 비속어가 포함된 메세지를 보낸 날짜를 얻기 위해 Arraylist에 저장된 원소를 String으로 불러와 StringTokenizer로 자를 것이다.
