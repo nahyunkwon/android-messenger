@@ -155,15 +155,15 @@ time 은 ArrayList로 사용자가 채팅방에 비속어가 적힌 메세지를
 
 ## 2.2. 날짜 얻는 부분
 ```java
- 	String s;  
-            s = time.get(num).toString();  
-        
-	StringTokenizer str = new StringTokenizer(s, " "); 
-            s = str.nextToken(); 
+String s;  
+    s = time.get(num).toString();  
 
-            str = new StringTokenizer(s, "-"); 
-            for (int j = 0; j <3; j++) 
-                s =str.nextToken();  
+StringTokenizer str = new StringTokenizer(s, " "); 
+    s = str.nextToken(); 
+
+    str = new StringTokenizer(s, "-"); 
+    for (int j = 0; j <3; j++) 
+        s =str.nextToken();  
 
 ```
 사용자가 비속어가 포함된 메세지를 보낸 날짜를 얻기 위해 Arraylist에 저장된 원소를 String으로 불러와 StringTokenizer로 자를 것이다.
@@ -177,11 +177,11 @@ s와 "-"을 인자로 가지는 StringTokenizer 객체를 생성하여 Sring을 
 ## 2.3. 해쉬맵에 넣는 부분
 
 ```java
- 	if(!week.containsKey(date)) { 
-                ArrayList<Timestamp> tmpList = new ArrayList<Timestamp>(); 
-                tmpList.add(time.get(num));
-                week.put(date, tmpList); 
-            }
+if(!week.containsKey(date)) { 
+    ArrayList<Timestamp> tmpList = new ArrayList<Timestamp>(); 
+    tmpList.add(time.get(num));
+    week.put(date, tmpList); 
+}
 ```
 오늘 처음으로 비속어가 적힌 메세지를 보내는 경우, 원소가 Timestamp 타입인 임시 Arraylist을 생성한다.
 num번째 Timestamp타입의 원소를 꺼내서 위에서 찍어둔 시각을 받아와 임시 Arraylist에 저장한다. 
@@ -189,11 +189,11 @@ get(num)메소드를 이용하여 hashmap에서 key값이 num일 때 대응하�
  put()메소드의 매개변수를 이용하여 date를 키로 tmpListRef을 value로 저장한다.
 
 ```java
-            else { 
-                ArrayList<Timestamp> tmpListRef = week.get(date); 
-                tmpListRef.add(time.get(num)); 
-                week.put(date, tmpListRef); 
-            }
+else { 
+    ArrayList<Timestamp> tmpListRef = week.get(date); 
+    tmpListRef.add(time.get(num)); 
+    week.put(date, tmpListRef); 
+}
 ```
 오늘 이미 비속어가 적힌 메세지를 보낸 경우, get(key) 메소드를 이용하여 value 값을 받아와 원소가 Timestamp 타입인 임시 Arraylist 에 저장한다. 
 get()메소드를 이용하여 time에서 시각원소를 받아 add() 메소드를 이용하여 tmpListRef에 저장하고, put()메소드의 매개변수로 date를 키로 tmpListRef을 value를 저장한다.
