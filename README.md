@@ -31,7 +31,6 @@ mSendButton = (Button) findViewById(R.id.sendButton);
                  mMessageEditText.setText("");
              }
          });
-         </code></pre>
 ```
 
          
@@ -114,14 +113,14 @@ for (int start = 0; start < modifiedInput.length(); start++) {
          
 ```java
 // replace each bad word character with *
-         String inputToReturn = input;
-         for (String swearWord : badWordsFound) {
-             char[] charsStars = new char[swearWord.length()];
-             Arrays.fill(charsStars, '*');
-             final String stars = new String(charsStars);
-             // The "(?i)" is to make the replacement case insensitive.
-             inputToReturn = inputToReturn.replaceAll("(?i)" + swearWord, stars);
-         }
+String inputToReturn = input;
+    for (String swearWord : badWordsFound) {
+    char[] charsStars = new char[swearWord.length()];
+    Arrays.fill(charsStars, '*');
+    final String stars = new String(charsStars);
+    // The "(?i)" is to make the replacement case insensitive.
+    inputToReturn = inputToReturn.replaceAll("(?i)" + swearWord, stars);
+    }
  ```
          
 input String에 비속어가 있으면 해당 비속어의 단어 하나하나는 *로 대체되며, 이 결과를 리턴한다.
