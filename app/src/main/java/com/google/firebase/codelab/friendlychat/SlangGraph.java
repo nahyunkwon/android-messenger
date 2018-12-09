@@ -13,41 +13,41 @@ import java.util.StringTokenizer;
 public class SlangGraph extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { //create a new activity to show graph of using swearwords
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slang_graph);
 
-        showGraph();
+        showGraph(); //call showGraph() method when the activity is created
     }
 
     public static com.jjoe64.graphview.GraphView graph_view;
 
-    public void showGraph() {
+    public void showGraph() { //a method that shows the graph of using swearwords of users
 
-        Timestamp today = new Timestamp(System.currentTimeMillis());
+        Timestamp today = new Timestamp(System.currentTimeMillis()); //make a Timestamp instance of current time
 
-        String key = today.toString();
+        String key = today.toString(); //change it into String
 
-        StringTokenizer str = new StringTokenizer(key, " ");
+        StringTokenizer str = new StringTokenizer(key, " "); //get YYYY-MM-DD part by using StringTokenizer with " "
 
         key = str.nextToken();
 
-        str = new StringTokenizer(key, "-");
+        str = new StringTokenizer(key, "-"); //get DD part by using StringTokenizer with "-" and for loop
         for(int i =0; i<3; i++){
             key = str.nextToken();
         }
 
-        int k_value = Integer.parseInt(key);
+        int k_value = Integer.parseInt(key); //change it into integer value
 
-        int[] array_x = new int[7];
-        for(int i=0; i<7; i++){
+        int[] array_x = new int[7]; //make an array of x-aixs of the graph
+        for(int i=0; i<7; i++){ //put the values of the date of the last 7 days in the array
             array_x[i] = k_value-i;
         }
 
 
-        int[] array_y = new int[7];
+        int[] array_y = new int[7]; //make an array of y-aixs of the graph
 
-        for(int i=0; i<7; i++){
+        for(int i=0; i<7; i++){ //put the values of the number of using bad language
             if(!MainActivity.week.containsKey(array_x[i])){
                 array_y[i] = 0;
                 break;
@@ -55,10 +55,7 @@ public class SlangGraph extends AppCompatActivity {
             array_y[i] = MainActivity.week.get(array_x[i]).size();
         }
 
-
-        int numx = array_x[6];
-        int numy = array_y[6];
-
+        //make a linear graph about the number of using swearwords in the last 7 days using arrays
         graph_view = (com.jjoe64.graphview.GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[]{
                 new DataPoint(array_x[6], array_y[6]),

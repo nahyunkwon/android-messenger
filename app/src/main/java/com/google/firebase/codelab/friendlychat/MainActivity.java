@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity
 
     public static Map<String, String[]> allBadWords = new HashMap<String, String[]>();
 
-    public static int num = 0;
-
+    public static int num = 0; //declares the index of the list
+    //declares the HashMap which contains the Integer type Key & ArrayList<TimeStamp> type Value
     public static HashMap<Integer, ArrayList<Timestamp>> week = new HashMap<Integer, ArrayList<Timestamp>>();
-
+    //declares the ArrayList which contains the Timestamp value.
     public static ArrayList<Timestamp> time = new ArrayList<Timestamp>();
 
     /* Profanity Filtering */
@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         String modifiedInput = input;
+
 
         // remove leetspeak
         modifiedInput = modifiedInput.replaceAll("1", "i").replaceAll("!", "i").replaceAll("3", "e").replaceAll("4", "a")
@@ -135,31 +136,31 @@ public class MainActivity extends AppCompatActivity
         }
 
         //욕설이 나오면 타임스탬프 찍는 부분
-        if(badWordsFound.size()>0){
-            time.add(new Timestamp(System.currentTimeMillis()));
+        if(badWordsFound.size()>0){ //continues the program if bad words are written
+            time.add(new Timestamp(System.currentTimeMillis())); //constructs a Timestamp object using a milliseconds time value //yyyy-mm-dd hh:mm:ss
 
-            String s;
-            s = time.get(num).toString();
-            StringTokenizer str = new StringTokenizer(s, " ");
-            s = str.nextToken();
-            str = new StringTokenizer(s, "-");
-            for (int j = 0; j <3; j++)
-                s =str.nextToken();
+            String s;  //declares a String value
+            s = time.get(num).toString(); //returns the element at the num position and changes it into String format
+            StringTokenizer str = new StringTokenizer(s, " "); //constructs a StringTokenizer object
+            s = str.nextToken(); //returns the first tokenizer from str
+            str = new StringTokenizer(s, "-");  //constructs a StringTokenizer object and seperating the tokens with "-"
+            for (int j = 0; j <3; j++)  //repeats getting the next tokenizer for 3 time
+                s =str.nextToken();  //saves the dd part
 
-            int date = Integer.parseInt(s);
+            int date = Integer.parseInt(s); //converts the String variable into Int type
 
-            if(!week.containsKey(date)) {
-                ArrayList<Timestamp> tmpList = new ArrayList<Timestamp>();
-                tmpList.add(time.get(num));
-                week.put(date, tmpList);
+            if(!week.containsKey(date)) { //when the user first writes bad words today
+                ArrayList<Timestamp> tmpList = new ArrayList<Timestamp>(); //declares the ArrayList with TimeStamp value
+                tmpList.add(time.get(num)); //takes out the value of num position from the time list and saves it in another arraylist
+                week.put(date, tmpList); //saves the date(dd) and the list containing the actual date(full format)
             }
-            else {
-                ArrayList<Timestamp> tmpListRef = week.get(date);
-                tmpListRef.add(time.get(num));
-                week.put(date, tmpListRef);
+            else { //when the user has already written bad words today.
+                ArrayList<Timestamp> tmpListRef = week.get(date); //creates the reference list
+                tmpListRef.add(time.get(num)); // adds the TimeStamp element to the end of the list
+                week.put(date, tmpListRef); //replaces the old value and associates the specifeid value with the specified key
             }
 
-            num++;
+            num++;//increases the index variable
         }
 
         // replace each bad word character with *
