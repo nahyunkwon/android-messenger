@@ -6,7 +6,7 @@
 
 >삐- 비속어 방지톡은 메신저 사용자가 보내는 비속어를 필터링하고, 
 얼마나 비속어를 사용했는지 통계로 보여 주어 사용자에게 비속어 사용에 대한 경각심을 주고, 
-나아가 메신저를 통한 사이버 불링 등의 범죄를 방지하고자 하는 안드로이드 메신저이다.
+나아가 기존 메신저의 폐쇄적인 특성을 악용한 사이버 불링 등의 범죄를 방지하고자 하는 안드로이드 메신저이다.
 
 
 
@@ -58,19 +58,18 @@ loadBadWords()
 getCensoredText()는 loanBadWords() 메소드를 호출한다. 이 메소드는 사용자 메시지에서 비속어를 필터링하기 쉽도록 비속어 데이터를 정리하는 역할을 한다.
 
 ```java
-InputStreamReader is = new InputStreamReader(getAssets()
-                     .open("Word_Filter.csv")); //get bad word database from assets folder
+InputStreamReader is = new InputStreamReader(getAssets().open("Word_Filter.csv")); //get bad word database from assets folder
 ```
 
-loanBadWords() 메소드는 assets 폴더의 비속어 데이터를 불러온다.
-비속어 데이터는 csv 파일 형식으로 저장한다.
+loanBadWords() 메소드는 app/src/main/assets 폴더의 비속어 데이터를 불러온다.
+비속어 데이터는 csv 파일 형식으로 저장하여 쉽게 데이터를 추가하고 삭제할 수 있다.
 
 ```java
 // Make sure there are no capital letters in the spreadsheet
 allBadWords.put(word.replaceAll(" ", "").toLowerCase(), ignore_in_combination_with_words);
 ```
                      
-모든 비속어는 allBadWords 해시맵에 저장된다.              
+모든 비속어는 불필요한 공백을 제거한 후 allBadWords 해시맵에 저장된다.              
 
 
 ## 1.4. 비속어 필터링
@@ -81,7 +80,7 @@ modifiedInput = modifiedInput.replaceAll("1", "i").replaceAll("!", "i").replaceA
     .replaceAll("@", "a").replaceAll("5", "s").replaceAll("7", "t").replaceAll("0", "o").replaceAll("9", "g");
 ```
 
-getCensoredText()에서는 먼저 input에서 leetspeak을 제거한다.(영어 비속어의 경우)
+getCensoredText()에서는 먼저 input String에서 leetspeak을 제거한다.(영어 비속어의 경우)
 
 ```java
 // iterate over each letter in the word
@@ -108,7 +107,7 @@ for (int start = 0; start < modifiedInput.length(); start++) {
 ```
          
 이후 input String의 단어를 반복하며 allBadWords의 비속어를 갖고 있는지 검사하여 비속어를 찾는다.
-여기서 largestWordLength는 loanBadWords()에서 계산된, 비속어 데이터를 정리할 때 가장 긴 비속어의 길이를 의미한다.
+여기서 largestWordLength는 loanBadWords() 메소드에서 계산된, 비속어 데이터를 정리할 때 가장 긴 비속어의 길이를 의미한다.
          
          
 ```java
@@ -456,16 +455,20 @@ AndroidManifest.xml 내 변수들을 변경하여 이 기능들을 수행한다.
 ## 4. 사용 오픈소스
 
 * Firebase 안드로이드 메신저 오픈소스
-https://github.com/KwonNH/android-messenger
+https://github.com/firebase/friendlychat-android, Apache License 2.0
 
 * 비속어 필터링 오픈소스
 https://github.com/souwoxi/Profanity
 
 * Graph View 통계량 오픈소스
-https://github.com/jjoe64/GraphView
+https://github.com/jjoe64/GraphView, Apache License 2.0
 
 
-## 5. 팀원별 역할
+## 5. 라이센스
+See [LICENSE](LICENSE), Apache License 2.0
+
+
+## 6. 팀원별 역할
 
 * 1515004 권나현: 비속어 필터링 기능 개발, Git 관리
 * 1771022 문효진: 비속어 통계량 개발, 발표자료, 중간발표자
