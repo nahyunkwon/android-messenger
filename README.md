@@ -456,16 +456,20 @@ AndroidManifest.xml 내 변수들을 변경하여 이 기능들을 수행한다.
 ## 4. 사용 오픈소스
 
 * Firebase 안드로이드 메신저 오픈소스
-https://github.com/KwonNH/android-messenger
+https://github.com/firebase/friendlychat-android, Apache License 2.0
 
 * 비속어 필터링 오픈소스
 https://github.com/souwoxi/Profanity
 
 * Graph View 통계량 오픈소스
-https://github.com/jjoe64/GraphView
+https://github.com/jjoe64/GraphView, Apache License 2.0
 
 
-## 5. 팀원별 역할
+## 5. 라이센스
+See [LICENSE](LICENSE), Apache License 2.0
+
+
+## 6. 팀원별 역할
 
 * 1515004 권나현: 비속어 필터링 기능 개발, Git 관리
 * 1771022 문효진: 비속어 통계량 개발, 발표자료, 중간발표자
