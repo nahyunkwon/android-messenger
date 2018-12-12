@@ -424,7 +424,7 @@ android:theme="@style/AppTheme">
 ```
 
 AndroidManifest.xml 내 변수들을 변경하여 이 기능들을 수행한다.
-기존의 label 값을 변경하여 '삐비톡' 애플리캐이션의 이름을 변경한다.
+기존의 label 값을 변경하여 '삐비톡' 애플리케이션의 이름을 변경한다.
 그리고 roundIcon 사용을 위해 앞서 선언한 이미지를 res > image Assert 메뉴를 통해 임포트 시킨다.
 
 ### 3.3.3. activity_main.xml 내 버튼 글씨체 및 색상 변경
@@ -453,11 +453,32 @@ AndroidManifest.xml 내 변수들을 변경하여 이 기능들을 수행한다.
 # 3. 설치 방법 및 사용법
 * [bbi-bi-talk.apk](bbi-bi-talk.apk) 파일을 안드로이드 기기에 다운로드하고, 실행하여 설치한다.
 
+<div>
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49862395-72f83a80-fe41-11e8-8580-82785b35c080.png">
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49862394-72f83a80-fe41-11e8-8b4b-cc9e9e26d60f.png">
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49862393-72f83a80-fe41-11e8-9d92-ce8bcc94c1a1.png">
+</div>
+
 * 삐- 비속어 방지톡 어플리케이션 설치 후 google 계정으로 로그인하여 사용한다. 
+<div>
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49873268-cd53c400-fe5e-11e8-800f-914f6b6b880c.png">
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49862664-03cf1600-fe42-11e8-8ac5-700bfd20f2fc.png">
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49862663-03cf1600-fe42-11e8-9999-0d1acb63ae87.png">
+</div>
+
 
 * 채팅방에서 욕설을 보내면 필터링하여 전송된다. 
 
+<div>
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49873267-ccbb2d80-fe5e-11e8-8fc2-2115d2dc2587.png">
+</div>
+
+
 * 채팅방에서 GRAPH 버튼을 누르면 자신의 비속어 사용 통계를 볼 수 있다.
+
+<div>
+<img width="250" src="https://user-images.githubusercontent.com/26895180/49873266-ccbb2d80-fe5e-11e8-91f0-1eb979d1fc26.png">
+</div>
 
 
 # 4. 사용 오픈소스
@@ -478,7 +499,7 @@ See [LICENSE](LICENSE), Apache License 2.0
 
 # 6. 개발자 정보
 
-* 1515004 권나현(KwonNH): 비속어 필터링 기능 개발, Git 관리
+* 1515004 권나현(KwonNH): 비속어 필터링 기능 개발, Git 관리, 시연영상 제작
          - NahyunChat1, 2, 3: 비속어 필터링 기능
 * 1771022 문효진(hyojin530): 비속어 통계량 기능 개발, 발표자료, 중간발표자
          - YeaunChat2, statistics_2 : 비속어 통계량 기능
