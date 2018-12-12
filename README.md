@@ -385,7 +385,7 @@ ImageView 내 src변수에 스플래쉬 화면으로 이용하고 싶은 이미�
 <intent-filter> 를 안에 갖고 있는 액티비티는 프로그램이 시행될 때 제일 먼저 수행되는 액티비티이다.
 기존의 MainActivity 속에 있던 <intent-filter> 부분을 SplashActivity를 선언한 후 그 안으로 옮긴다.
 
-## 3.2 테마 컬러 설정
+## 3.2. 테마 컬러 설정
 
 ```java
 <?xml version="1.0" encoding="utf-8"?>
@@ -403,15 +403,15 @@ ImageView 내 src변수에 스플래쉬 화면으로 이용하고 싶은 이미�
 values > colors.xml 내의 컬러 변수들을 변경하여 사용한다.
 이 때, "colorPrimary"는 메뉴바의 색상을 "colorPrimaryDark"는 상단바의 색상을 나타낸다.
 
-## 3.3 아이콘 및 기타 UI
+## 3.3. 아이콘 및 기타 UI
 
-### 3.3.1 이미지 및 폰트 파일 추가
+### 3.3.1. 이미지 및 폰트 파일 추가
 
 이미지를 아이콘과 애플리캐이션 대표 이미지 등에 사용하기 위하여 res > drawble 폴더 내에 이미지를 png 파일로 넣어준다.
 마찬가지로 폰트를 res 폴더 내 새로운 font 폴더를 생성해 otf 파일로 넣어준다.
 이 파일들은 다른 곳에서 접근하여 사용될 수 있다.
 
-### 3.3.2 AndroidManifest.xml 내 변수값 변경
+### 3.3.2. AndroidManifest.xml 내 변수값 변경
 
 ```java
 android:allowBackup="true"
@@ -427,7 +427,7 @@ AndroidManifest.xml 내 변수들을 변경하여 이 기능들을 수행한다.
 기존의 label 값을 변경하여 '삐비톡' 애플리캐이션의 이름을 변경한다.
 그리고 roundIcon 사용을 위해 앞서 선언한 이미지를 res > image Assert 메뉴를 통해 임포트 시킨다.
 
-### 3.3.3 activity_main.xml 내 버튼 글씨체 및 색상 변경
+### 3.3.3. activity_main.xml 내 버튼 글씨체 및 색상 변경
 
 ```java
 <Button
@@ -450,9 +450,11 @@ AndroidManifest.xml 내 변수들을 변경하여 이 기능들을 수행한다.
 
 
 
+# 3. 설치 방법
 
 
-## 4. 사용 오픈소스
+
+# 4. 사용 오픈소스
 
 * Firebase 안드로이드 메신저 오픈소스
 https://github.com/firebase/friendlychat-android, Apache License 2.0
@@ -464,17 +466,20 @@ https://github.com/souwoxi/Profanity
 https://github.com/jjoe64/GraphView, Apache License 2.0
 
 
-## 5. 라이센스
+# 5. 라이센스
 See [LICENSE](LICENSE), Apache License 2.0
 
 
-## 6. 팀원별 역할
+# 6. 개발자 정보
 
-* 1515004 권나현: 비속어 필터링 기능 개발, Git 관리
-* 1771022 문효진: 비속어 통계량 개발, 발표자료, 중간발표자
-* 1771046 이혜진: UI 디자인 담당, 삐비-톡 아이콘 디자인, 기말발표자
-* 1771105 조예은: 비속어 통계량 개발, 발표자료, 기말발표자
-
+* 1515004 권나현(KwonNH): 비속어 필터링 기능 개발, Git 관리
+         * NahyunChat1, 2, 3: 비속어 필터링 기능
+* 1771022 문효진(hyojin530): 비속어 통계량 기능 개발, 발표자료, 중간발표자
+         * YeaunChat2, statistics_2 : 비속어 통계량 기능
+* 1771046 이혜진(leeheajin): UI 디자인 담당, 삐비-톡 아이콘 디자인, 기말발표자
+         * NahyunChat4: 사용자 인터페이스 
+* 1771105 조예은(yjo5252): 비속어 통계량 기능 개발, 발표자료, 기말발표자
+         * YeaunChat2, statistics_2 : 비속어 통계량 기능
 * * *
 
 Ewha Womans University
