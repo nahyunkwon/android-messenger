@@ -500,13 +500,13 @@ See [LICENSE](LICENSE), Apache License 2.0
 # 6. 개발자 정보
 
 + 1515004 권나현(KwonNH): 비속어 필터링 기능 개발, Git 관리, 시연영상 제작
-         * NahyunChat1, 2, 3: 비속어 필터링 기능
+  * NahyunChat1, 2, 3: 비속어 필터링 기능
 + 1771022 문효진(hyojin530): 비속어 통계량 기능 개발, 발표자료, 중간발표자
-         * YeaunChat2, statistics_2 : 비속어 통계량 기능
+  * YeaunChat2, statistics_2 : 비속어 통계량 기능
 + 1771046 이혜진(leeheajin): UI 디자인 담당, 삐비톡 아이콘 디자인, 기말발표자
-         * NahyunChat4: 사용자 인터페이스 
+  * NahyunChat4: 사용자 인터페이스 
 + 1771105 조예은(yjo5252): 비속어 통계량 기능 개발, 발표자료, 기말발표자
-         * YeaunChat2, statistics_2 : 비속어 통계량 기능
+  * YeaunChat2, statistics_2 : 비속어 통계량 기능
 * * *
 
 Ewha Womans University
