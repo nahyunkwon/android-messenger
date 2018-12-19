@@ -492,12 +492,14 @@ https://github.com/souwoxi/Profanity
 * Graph View 통계량 오픈소스
 https://github.com/jjoe64/GraphView, Apache License 2.0
 
+# 5. 시연영상
+[TEAM13-삐비톡 시연영상](https://youtu.be/RmVLotNptck)
 
-# 5. 라이센스
+# 6. 라이센스
 See [LICENSE](LICENSE), Apache License 2.0
 
 
-# 6. 개발자 정보
+# 7. 개발자 정보
 
 + 1515004 권나현(KwonNH): 비속어 필터링 기능 개발, Git Repository 관리, 중간발표자료, 시연영상 제작
   * NahyunChat1, 2, 3: 비속어 필터링 기능
